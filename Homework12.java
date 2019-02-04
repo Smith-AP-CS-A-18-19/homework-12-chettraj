@@ -6,18 +6,21 @@ import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
 public class Homework12 {
+	private ArrayList<RectangularShape> values;
 
 	/* Finish the constructor and create any necessary instance
 	 * variables. The constructor should create and save an
 	 * ArrayList of RectangularShape values
 	 */
 	public Homework12() {
+		values = new ArrayList<RectangularShape>();
 
 	}
 
 	/* Adds the parameter s to the ArrayList
 	 */
 	public void addShape(RectangularShape s) {
+		values.add(s);
 
 	}
 
@@ -26,6 +29,13 @@ public class Homework12 {
 	 * parameter r
 	 */
 	public int problem1(Rectangle2D r) {
+		int sum = 0;
+		for (int i = 0; i < values.size(); i++){
+			if (values.get(i).intersects(r) == true){
+				sum++;
+			}
+		}
+		return sum;
 
 	}
 
@@ -34,6 +44,13 @@ public class Homework12 {
 	 * parameter p
 	 */
 	public int problem2(Point2D p) {
+		int sum = 0;
+		for (int i = 0; i < values.size(); i++){
+			if (values.get(i).contains(p) != true){
+				sum++;
+			}
+		}
+		return sum;
 
 	}
 
@@ -41,14 +58,25 @@ public class Homework12 {
 	 * are in the ArrayList
 	 */
 	public int problem3() {
-
+		int all = 0;
+		for (int i = 0; i < values.size(); i++){
+			if (values.get(i) instanceof Ellipse2D){
+				all++;
+			}
+		}
+		return all;
 	}
 
 	/* Returns true if any of the Rectangle2D objects
 	 * in the ArrayList intersects the parameter Line2D
 	 */
 	public boolean problem4(Line2D l) {
-
+		for (int i = 0; i < values.size(); i++){
+			if (values.get(i).contains(l.getX1(), l.getY1())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/* Return the total area of the RectangularShape objects in
@@ -59,8 +87,20 @@ public class Homework12 {
 	 * If two objects intersect, the intersected area
 	 * counts for both (i.e. do not account for intersection)
 	 */
-	public double problem5() {
-
+ public double problem5() {
+	double area = 0;
+	RectangularShape rect = new Rectangle2D.Double();
+		for (int i = 0; i < values.size(); i++){
+			if (values.get(i) instanceof Rectangle2D){
+				rect = values.get(i);
+				area += rect.getWidth() * rect.getHeight();
+			}
+			else if (values.get(i) instanceof Ellipse2D){
+				rect = values.get(i);
+				area += Math.PI * (rect.getHeight() / 2) * (rect.getWidth() / 2);
+			}
+		}
+		return area;
 	}
 
 	public static void main(String[] args) {
